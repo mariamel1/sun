@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sunburnt by the Pool - Top View</title>
+<style>
+  body {
+    margin: 0;
+    background: #a8d8a8;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+  }
+  .caption {
+    position: absolute;
+    top: 20px;
+    width: 100%;
+    text-align: center;
+    font-size: 22px;
+    color: #333;
+    font-weight: bold;
+  }
+  .scene-wrap {
+    perspective: 1200px;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+  }
+  svg {
+    display: block;
+    transform: rotateX(55deg) rotateZ(-18deg);
+    transform-origin: center center;
+    box-shadow: 0 40px 60px rgba(0,0,0,0.25);
+  }
+
+  /* Pool water shimmer */
+  .wave {
+    animation: shimmer 2s linear infinite;
+  }
+  @keyframes shimmer {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+  }
+
+  /* Body skin tone: pale -> red over 6s */
+  .skin {
+    animation: burn 6s ease-in forwards;
+  }
+  @keyframes burn {
+    0%   { fill: #ffd8b8; }
+    30%  { fill: #ffb38a; }
+    60%  { fill: #ff8a65; }
+    100% { fill: #e53935; }
+  }
+
+  /* Only the BOY (not the chair) gets up and runs off, top-down: he runs "downward/away" */
+  .boy {
+    animation: getUpAndRun 8s ease-in forwards;
+    animation-delay: 6s;
+    transform-origin: center;
+  }
+  @keyframes getUpAndRun {
+    0%   { transform: translate(0,0) scale(1) rotate(0deg); }
+    8%   { transform: translate(0,-8px) scale(1.05) rotate(-4deg); } /* startled jump */
+    18%  { transform: translate(10,10) scale(0.95) rotate(4deg); }   /* on feet, turning */
+    100% { transform: translate(60px,650px) scale(0.6) rotate(4deg); } /* sprints away, shrinking with distance */
+  }
+
+  /* running legs blur/scissor effect */
+  .legs-run {
+    animation: scissor 0.25s linear infinite;
+    transform-origin: center;
+  }
+  @keyframes scissor {
+    0%   { transform: rotate(-14deg); }
+    50%  { transform: rotate(14deg); }
+    100% { transform: rotate(-14deg); }
+  }
+  .legs-lying {
+    opacity: 1;
+    animation: fadeLegsOut 0.5s ease forwards;
+    animation-delay: 6.4s;
+  }
+  @keyframes fadeLegsOut { to { opacity: 0; } }
+  .legs-run-group {
+    opacity: 0;
+    animation: fadeLegsIn 0.5s ease forwards;
+    animation-delay: 6.4s;
+  }
+  @keyframes fadeLegsIn { to { opacity: 1; } }
+
+  /* heat wiggle lines once fully burnt, fade before he gets up */
+  .steam {
+    opacity: 0;
+    animation: appearSteam 1s ease-in forwards, disappearSteam 0.6s ease forwards;
+    animation-delay: 5s, 6s;
+  }
+  @keyframes appearSteam { to { opacity: 1; } }
+  @keyframes disappearSteam { to { opacity: 0; } }
+  .steam path {
+    animation: wiggle 1s ease-in-out infinite alternate;
+  }
+  @keyframes wiggle {
+    from { transform: translateY(-3px); }
+    to   { transform: translateY(3px); }
+  }
+</style>
+</head>
+<body>
+<div class="scene-wrap">
+<svg viewBox="0 0 500 700" width="500" height="700">
+
+  <!-- Grass/patio background already set on body; add patio tiles -->
+  <rect x="0" y="0" width="500" height="700" fill="#c9e4c5"/>
+  <rect x="20" y="20" width="460" height="660" fill="#e0d8c3" rx="10"/>
+
+  <!-- Pool, viewed from directly above -->
+  <rect x="40" y="40" width="420" height="180" rx="20" fill="#29b6f6"/>
+  <rect x="40" y="40" width="420" height="180" rx="20" fill="none" stroke="#ffffff" stroke-width="4"/>
+  <g class="wave" stroke="#ffffff" stroke-width="2.5" fill="none" opacity="0.7">
+    <path d="M60 80 Q 85 70 110 80 T 160 80 T 210 80 T 260 80 T 310 80 T 360 80 T 410 80"/>
+    <path d="M60 120 Q 85 110 110 120 T 160 120 T 210 120 T 260 120 T 310 120 T 360 120 T 410 120"/>
+    <path d="M60 160 Q 85 150 110 160 T 160 160 T 210 160 T 260 160 T 310 160 T 360 160 T 410 160"/>
+  </g>
+
+  <!-- Wicker lounge chair, viewed from above - this stays put, boy leaves it behind -->
+  <g id="chair">
+    <rect x="150" y="260" width="120" height="340" rx="16" fill="#5d4633"/>
+    <rect x="160" y="270" width="100" height="150" rx="10" fill="#7a5c42"/>
+    <rect x="160" y="430" width="100" height="160" rx="10" fill="#7a5c42"/>
+    <!-- wicker weave texture -->
+    <g stroke="#5d4633" stroke-width="1.5" opacity="0.6">
+      <line x1="165" y1="280" x2="255" y2="280"/>
+      <line x1="165" y1="295" x2="255" y2="295"/>
+      <line x1="165" y1="310" x2="255" y2="310"/>
+      <line x1="165" y1="325" x2="255" y2="325"/>
+      <line x1="165" y1="340" x2="255" y2="340"/>
+      <line x1="165" y1="355" x2="255" y2="355"/>
+      <line x1="165" y1="370" x2="255" y2="370"/>
+      <line x1="165" y1="385" x2="255" y2="385"/>
+      <line x1="165" y1="400" x2="255" y2="400"/>
+      <line x1="180" y1="270" x2="180" y2="420"/>
+      <line x1="200" y1="270" x2="200" y2="420"/>
+      <line x1="220" y1="270" x2="220" y2="420"/>
+      <line x1="240" y1="270" x2="240" y2="420"/>
+      <line x1="165" y1="440" x2="255" y2="440"/>
+      <line x1="165" y1="455" x2="255" y2="455"/>
+      <line x1="165" y1="470" x2="255" y2="470"/>
+      <line x1="165" y1="485" x2="255" y2="485"/>
+      <line x1="165" y1="500" x2="255" y2="500"/>
+      <line x1="165" y1="515" x2="255" y2="515"/>
+      <line x1="165" y1="530" x2="255" y2="530"/>
+      <line x1="165" y1="545" x2="255" y2="545"/>
+      <line x1="165" y1="560" x2="255" y2="560"/>
+      <line x1="165" y1="575" x2="255" y2="575"/>
+      <line x1="180" y1="430" x2="180" y2="590"/>
+      <line x1="200" y1="430" x2="200" y2="590"/>
+      <line x1="220" y1="430" x2="220" y2="590"/>
+      <line x1="240" y1="430" x2="240" y2="590"/>
+    </g>
+    <!-- armrests -->
+    <rect x="140" y="270" width="14" height="320" rx="6" fill="#5d4633"/>
+    <rect x="266" y="270" width="14" height="320" rx="6" fill="#5d4633"/>
+  </g>
+
+  <!-- Small side table with drink, just for scene flavor -->
+  <circle cx="300" cy="280" r="26" fill="#bcaaa4"/>
+  <rect x="292" y="260" width="16" height="24" rx="3" fill="#4fc3f7"/>
+
+  <!-- Boy, viewed directly from above, lying on the chair -->
+  <g class="boy">
+    <!-- head, top-down: circle with black hair covering the top of it -->
+    <circle class="skin" cx="210" cy="300" r="24" fill="#ffd8b8"/>
+    <ellipse cx="207" cy="288" rx="19" ry="13" fill="#111111"/>
+    <!-- sunglasses, seen from above resting clearly below the hairline -->
+    <g>
+      <rect x="190" y="299" width="40" height="13" rx="5" fill="#1a2733"/>
+      <circle cx="200" cy="305.5" r="8" fill="#2b3f52"/>
+      <circle cx="220" cy="305.5" r="8" fill="#2b3f52"/>
+      <ellipse cx="197" cy="303" rx="3" ry="1.6" fill="#bcd9ee" opacity="0.85"/>
+      <ellipse cx="217" cy="303" rx="3" ry="1.6" fill="#bcd9ee" opacity="0.85"/>
+      <line x1="190" y1="305" x2="176" y2="303" stroke="#1a2733" stroke-width="2.5"/>
+      <line x1="230" y1="305" x2="244" y2="303" stroke="#1a2733" stroke-width="2.5"/>
+    </g>
+
+    <!-- torso, top-down -->
+    <rect class="skin" x="185" y="322" width="50" height="90" rx="18" fill="#ffd8b8"/>
+    <!-- swim shorts over hips -->
+    <rect x="185" y="392" width="50" height="26" rx="10" fill="#0288d1"/>
+
+    <!-- arms resting at sides -->
+    <rect class="skin" x="160" y="330" width="20" height="70" rx="10" fill="#ffd8b8"/>
+    <rect class="skin" x="240" y="330" width="20" height="70" rx="10" fill="#ffd8b8"/>
+
+    <!-- LEGS: lying straight (top-down), fades out when he gets up -->
+    <g class="legs-lying">
+      <rect class="skin" x="188" y="418" width="20" height="90" rx="10" fill="#ffd8b8"/>
+      <rect class="skin" x="212" y="418" width="20" height="90" rx="10" fill="#ffd8b8"/>
+    </g>
+
+    <!-- LEGS: running scissor pose, fades in when he gets up -->
+    <g class="legs-run-group">
+      <g class="legs-run">
+        <rect class="skin" x="185" y="418" width="18" height="80" rx="9" fill="#ffd8b8"/>
+      </g>
+      <g class="legs-run" style="animation-delay:0.125s">
+        <rect class="skin" x="215" y="418" width="18" height="80" rx="9" fill="#ffd8b8"/>
+      </g>
+    </g>
+
+    <!-- heat wiggle lines rising off the burnt body -->
+    <g class="steam">
+      <path d="M185 340 Q 180 330 185 320 Q 190 310 185 300" stroke="#ff5252" stroke-width="2" fill="none"/>
+      <path d="M235 340 Q 230 330 235 320 Q 240 310 235 300" stroke="#ff5252" stroke-width="2" fill="none"/>
+      <path d="M210 360 Q 205 350 210 340 Q 215 330 210 320" stroke="#ff5252" stroke-width="2" fill="none"/>
+    </g>
+  </g>
+
+</svg>
+</div>
+</body>
+</html>
